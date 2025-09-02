@@ -92,7 +92,7 @@ export default function Home() {
           onMouseLeave={onMouseLeaveStick}
           onMouseMove={onMouseMoveStick}
         >
-          Frig.dev Clone
+          Francesco's Website Main
         </h1>
         <p
           className="mb-6 text-gray-300 max-w-prose inline-block"
@@ -119,8 +119,8 @@ export default function Home() {
             onMouseLeave={onMouseLeaveStick}
             onMouseMove={onMouseMoveStick}
           >
-            Sono uno sviluppatore full-stack con esperienza in frontend, backend
-            e DevOps. Amo creare siti web eleganti, performanti e con ottima UX.
+            Sono uno sviluppatore full-stack con esperienza in frontend, backend.
+            Amo creare siti web eleganti, performanti e con ottima UX.
           </p>
         </section>
 
@@ -143,7 +143,7 @@ export default function Home() {
                   "Next.js",
                   "Tailwind CSS",
                   "Vue.js",
-                  "HTML5 & CSS3",
+                  "HTML5 & CSS",
                 ],
               },
               {
@@ -151,19 +151,8 @@ export default function Home() {
                 skills: [
                   "Node.js",
                   "Express.js",
-                  "Python (Django, Flask)",
                   "GraphQL",
                   "REST API",
-                ],
-              },
-              {
-                title: "DevOps & Tools",
-                skills: [
-                  "Docker & Kubernetes",
-                  "Git & GitHub",
-                  "CI/CD (GitHub Actions)",
-                  "AWS & Azure",
-                  "Linux Server",
                 ],
               },
             ].map(({ title, skills }) => (
@@ -212,12 +201,12 @@ export default function Home() {
           >
             GitHub:{" "}
             <a
-              href="https://github.com/tuousername"
+              href="https://github.com/mrfrancesco"
               target="_blank"
               rel="noopener noreferrer"
               className="underline"
             >
-              github.com/tuousername
+              github.com/mrfrancesco
             </a>
           </p>
         </section>
