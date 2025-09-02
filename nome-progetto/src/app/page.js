@@ -1,103 +1,246 @@
-import Image from "next/image";
+"use client";
+import { useEffect, useRef, useState } from "react";
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const cursorRef = useRef(null);
+  const [activeStick, setActiveStick] = useState(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  // Easing function
+  const lerp = (start, end, amt) => (1 - amt) * start + amt * end;
+
+  useEffect(() => {
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    // Aggiorna posizione mouse
+    function onMouseMove(e) {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    }
+
+    window.addEventListener("mousemove", onMouseMove);
+
+    // Animazione cursore
+    function animate() {
+      cursorX = lerp(cursorX, mouseX, 0.15);
+      cursorY = lerp(cursorY, mouseY, 0.15);
+      cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+    };
+  }, []);
+
+  // Magnetismo su elementi "stick"
+  const onMouseEnterStick = (e) => {
+    setActiveStick(e.currentTarget);
+  };
+
+  const onMouseLeaveStick = () => {
+    if (activeStick) {
+      activeStick.style.transform = "";
+      setActiveStick(null);
+    }
+  };
+
+  const onMouseMoveStick = (e) => {
+    if (!activeStick) return;
+
+    const rect = activeStick.getBoundingClientRect();
+    const relX = e.clientX - rect.left;
+    const relY = e.clientY - rect.top;
+    const moveX = (relX - rect.width / 2) * 0.2;
+    const moveY = (relY - rect.height / 2) * 0.2;
+
+    activeStick.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+  };
+
+  return (
+    <>
+      <style>{`
+        body {
+          cursor: none;
+          background: #0f0f0f;
+          color: #e0e0e0;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          min-height: 100vh;
+          margin: 0;
+          padding: 0;
+        }
+        a {
+          color: #39ff14;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        a:hover {
+          text-decoration: underline;
+        }
+      `}</style>
+
+      <div className="container mx-auto max-w-3xl p-6">
+        <h1
+          className="text-4xl font-extrabold mb-4 tracking-widest text-[#39ff14] inline-block"
+          onMouseEnter={onMouseEnterStick}
+          onMouseLeave={onMouseLeaveStick}
+          onMouseMove={onMouseMoveStick}
+        >
+          Frig.dev Clone
+        </h1>
+        <p
+          className="mb-6 text-gray-300 max-w-prose inline-block"
+          onMouseEnter={onMouseEnterStick}
+          onMouseLeave={onMouseLeaveStick}
+          onMouseMove={onMouseMoveStick}
+        >
+          Benvenuto nel mio sito personale. Qui puoi trovare informazioni sulle
+          mie competenze e progetti.
+        </p>
+
+        <section>
+          <h2
+            className="text-2xl font-bold border-b-2 border-[#39ff14] pb-1 mb-4 inline-block"
+            onMouseEnter={onMouseEnterStick}
+            onMouseLeave={onMouseLeaveStick}
+            onMouseMove={onMouseMoveStick}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            About
+          </h2>
+          <p
+            className="mb-6 max-w-prose text-gray-400"
+            onMouseEnter={onMouseEnterStick}
+            onMouseLeave={onMouseLeaveStick}
+            onMouseMove={onMouseMoveStick}
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            Sono uno sviluppatore full-stack con esperienza in frontend, backend
+            e DevOps. Amo creare siti web eleganti, performanti e con ottima UX.
+          </p>
+        </section>
+
+        <section className="mb-10">
+          <h2
+            className="text-2xl font-bold border-b-2 border-[#39ff14] pb-1 mb-6 inline-block"
+            onMouseEnter={onMouseEnterStick}
+            onMouseLeave={onMouseLeaveStick}
+            onMouseMove={onMouseMoveStick}
+          >
+            Skills
+          </h2>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            {[
+              {
+                title: "Frontend",
+                skills: [
+                  "React.js",
+                  "Next.js",
+                  "Tailwind CSS",
+                  "Vue.js",
+                  "HTML5 & CSS3",
+                ],
+              },
+              {
+                title: "Backend",
+                skills: [
+                  "Node.js",
+                  "Express.js",
+                  "Python (Django, Flask)",
+                  "GraphQL",
+                  "REST API",
+                ],
+              },
+              {
+                title: "DevOps & Tools",
+                skills: [
+                  "Docker & Kubernetes",
+                  "Git & GitHub",
+                  "CI/CD (GitHub Actions)",
+                  "AWS & Azure",
+                  "Linux Server",
+                ],
+              },
+            ].map(({ title, skills }) => (
+              <div
+                key={title}
+                className="bg-[#1a1a1a] border border-[#39ff14] rounded-md p-6 cursor-pointer inline-block"
+                onMouseEnter={onMouseEnterStick}
+                onMouseLeave={onMouseLeaveStick}
+                onMouseMove={onMouseMoveStick}
+              >
+                <h3 className="mb-4 font-semibold">{title}</h3>
+                <ul className="list-disc list-inside space-y-1 text-gray-300">
+                  {skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <h2
+            className="text-2xl font-bold border-b-2 border-[#39ff14] pb-1 mb-4 inline-block"
+            onMouseEnter={onMouseEnterStick}
+            onMouseLeave={onMouseLeaveStick}
+            onMouseMove={onMouseMoveStick}
+          >
+            Contatti
+          </h2>
+          <p
+            className="mb-2"
+            onMouseEnter={onMouseEnterStick}
+            onMouseLeave={onMouseLeaveStick}
+            onMouseMove={onMouseMoveStick}
+          >
+            Email:{" "}
+            <a href="mailto:tuoemail@example.com" className="underline">
+              tuoemail@example.com
+            </a>
+          </p>
+          <p
+            onMouseEnter={onMouseEnterStick}
+            onMouseLeave={onMouseLeaveStick}
+            onMouseMove={onMouseMoveStick}
+          >
+            GitHub:{" "}
+            <a
+              href="https://github.com/tuousername"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline"
+            >
+              github.com/tuousername
+            </a>
+          </p>
+        </section>
+      </div>
+
+      {/* Custom Cursor */}
+      <div
+        ref={cursorRef}
+        className={`fixed top-0 left-0 pointer-events-none bg-[#39ff14cc] rounded-full mix-blend-difference z-50 transition-transform duration-150 ease-out`}
+        style={{ width: 40, height: 40, transform: "translate(-50%, -50%)" }}
+      />
+      {/* Active cursor enlarge */}
+      {activeStick && (
+        <style>{`
+          div[ref] {
+            width: 80px !important;
+            height: 80px !important;
+            background: #39ff14 !important;
+            mix-blend-mode: normal !important;
+            transform: translate(-50%, -50%) scale(1.5) !important;
+          }
+        `}</style>
+      )}
+    </>
   );
 }
