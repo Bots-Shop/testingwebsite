@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sito Casuale</title>
+  <style>
+    /* Reset e base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0f0f;
+      color: #e0e0e0;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: none; /* nascondo il cursore nativo */
+    }
+    a {
+      color: #39ff14;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Layout container */
+    .container {
+      max-width: 900px;
+      margin: 2rem auto 4rem;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-weight: 900;
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      color: #39ff14;
+    }
+    h2 {
+      margin-top: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      border-bottom: 2px solid #39ff14;
+      padding-bottom: 0.3rem;
+      letter-spacing: 1.5px;
+      color: #39ff14;
+    }
+    p {
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      color: #ccc;
+    }
+
+    /* Skills grid */
+    .skills {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 1.5rem;
+    }
+    .skill-box {
+      background: #1a1a1a;
+      border: 1px solid #39ff14;
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: background 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .skill-box:hover {
+      background: #39ff14;
+      color: #0f0f0f;
+    }
+    .skill-box h3 {
+      margin-bottom: 1rem;
+    }
+    .skill-list {
+      list-style: none;
+      color: inherit;
+    }
+    .skill-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #555;
+      user-select: none;
+    }
+
+    /* Cursor styles */
+    .cursor {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 40px;
+      height: 40px;
+      background: rgba(57, 255, 20, 0.7);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      transition: background 0.3s ease, transform 0.15s ease;
+      mix-blend-mode: difference;
+      z-index: 9999;
+      will-change: transform;
+    }
+    .cursor.active {
+      width: 80px;
+      height: 80px;
+      background: #39ff14;
+      mix-blend-mode: normal;
+      transform: translate(-50%, -50%) scale(1.5);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    /* Magnet effect helper */
+    [data-cursor-stick] {
+      position: relative;
+      display: inline-block;
+      transition: transform 0.3s ease;
+      will-change: transform;
+    }
+    [data-cursor-stick].stick-active {
+      transform: scale(1.05);
+      color: #39ff14;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .skill-box {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 data-cursor-stick>Frig.dev Clone</h1>
+    <p data-cursor-stick>Benvenuto nel mio sito personale. Qui puoi trovare informazioni sulle mie competenze e progetti.</p>
+
+    <h2 data-cursor-stick>About</h2>
+    <p data-cursor-stick>
+      Sono uno sviluppatore full-stack con esperienza in frontend, backend e DevOps. Amo creare siti web eleganti, performanti e con ottima UX.
+    </p>
+
+    <h2 data-cursor-stick>Skills</h2>
+    <div class="skills">
+      <div class="skill-box" data-cursor-stick>
+        <h3>Frontend</h3>
+        <ul class="skill-list">
+          <li>React.js</li>
+          <li>Next.js</li>
+          <li>Tailwind CSS</li>
+          <li>Vue.js</li>
+          <li>HTML5 & CSS3</li>
+        </ul>
+      </div>
+      <div class="skill-box" data-cursor-stick>
+        <h3>Backend</h3>
+        <ul class="skill-list">
+          <li>Node.js</li>
+          <li>Express.js</li>
+          <li>Python (Django, Flask)</li>
+          <li>GraphQL</li>
+          <li>REST API</li>
+        </ul>
+      </div>
+      <div class="skill-box" data-cursor-stick>
+        <h3>DevOps & Tools</h3>
+        <ul class="skill-list">
+          <li>Docker & Kubernetes</li>
+          <li>Git & GitHub</li>
+          <li>CI/CD (GitHub Actions)</li>
+          <li>AWS & Azure</li>
+          <li>Linux Server</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2 data-cursor-stick>Contatti</h2>
+    <p data-cursor-stick>Email: <a href="mailto:tuoemail@example.com">tuoemail@example.com</a></p>
+    <p data-cursor-stick>GitHub: <a href="https://github.com/mrfrancesco" target="_blank" rel="noopener noreferrer">github.com/tuousername</a></p>
+  </div>
+
+  <footer>
+    © 2025 Frig.dev clone. Tutti i diritti riservati.
+  </footer>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <script>
+    (() => {
+      const cursor = document.getElementById("cursor");
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let cursorX = mouseX;
+      let cursorY = mouseY;
+
+      const sticks = document.querySelectorAll("[data-cursor-stick]");
+
+      // Funzione di easing per movimento fluido
+      function lerp(start, end, amt) {
+        return (1 - amt) * start + amt * end;
+      }
+
+      // Evento movimento mouse
+      window.addEventListener("mousemove", (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      // Effetto magnetico
+      sticks.forEach((stick) => {
+        stick.addEventListener("mouseenter", () => {
+          cursor.classList.add("active");
+          stick.classList.add("stick-active");
+        });
+        stick.addEventListener("mouseleave", () => {
+          cursor.classList.remove("active");
+          stick.classList.remove("stick-active");
+          stick.style.transform = "";
+        });
+        stick.addEventListener("mousemove", (e) => {
+          const rect = stick.getBoundingClientRect();
+          const relX = e.clientX - rect.left;
+          const relY = e.clientY - rect.top;
+          // Trasla leggermente l'elemento verso il cursore
+          const moveX = (relX - rect.width / 2) * 0.2;
+          const moveY = (relY - rect.height / 2) * 0.2;
+          stick.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+        });
+      });
+
+      // Animazione cursore
+      function animate() {
+        // Movimento fluido con easing
+        cursorX = lerp(cursorX, mouseX, 0.15);
+        cursorY = lerp(cursorY, mouseY, 0.15);
+
+        cursor.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`;
+
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+  </script>
+</body>
+</html>
